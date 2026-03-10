@@ -36,7 +36,7 @@ memory-loop/
 
 ```bash
 cd ~/.openclaw/workspace/skills
-git clone git@github.com:yuyizhong1128/memory-loop.git
+git clone git@github.com:y1zhongyu/memory-loop.git
 ```
 
 Then tell your agent: *"Set up memory-loop for me."*
@@ -86,7 +86,7 @@ git pull
 
 ```bash
 cd ~/.openclaw/workspace/skills
-git clone git@github.com:yuyizhong1128/memory-loop.git
+git clone git@github.com:y1zhongyu/memory-loop.git
 ```
 
 然后对 agent 说：「帮我初始化 memory-loop。」
