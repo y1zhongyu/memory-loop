@@ -11,7 +11,7 @@ Even with a 200K context window, AI models inevitably suffer from **early-contex
 2. **Incorrigibility**: You point out a mistake, the AI apologizes sincerely, but makes the exact same error later.
 3. **Alert Fatigue**: When errors pile up, legacy systems repeatedly bombard you with the same old error logs.
 
-## Core Features (v1.5.0 New Architecture)
+## Core Features (v1.6.0 Enterprise Ready)
 
 ### 1. 🚦 Dynamic Health Alerts & Soft Interruption
 - **SCOREBOARD**: Quantifies each Agent's execution capability on a 100-point scale. Any skipped step, rule violation, or omission results in immediate point deduction.
@@ -29,6 +29,11 @@ Even with a 200K context window, AI models inevitably suffer from **early-contex
 - **Wounded Recovery (Cap at 80 pts)**: Eliminates meaningless "daily self-assessed bonus points." After a true root-cause repair, the AI's score recovers to a **maximum of 80 points**—offering a chance at redemption while keeping the system highly sensitive to subsequent errors.
 - **Weekly True Reckoning**: Weekly reports display not just the final score, but the **total raw points deducted that week**, exposing the true severity of the AI's "illness."
 
+### 4. 🧹 Industrial-Grade Anti-Bloat Mechanism (New in v1.6.0)
+- **Pattern-Based Merging**: Automatically groups similar errors into a single high-density entry instead of creating redundant logs.
+- **Physical Hard-Cap (5000 Tokens)**: Strictly limits the size of the Active Error Zone to maintain near-zero latency and minimal token costs.
+- **Ultra-Compressed Archiving**: Retires old errors into a single-line audit log format, allowing for infinite historical tracking without performance degradation.
+
 ---
 
 ## 中文介绍
@@ -45,7 +50,7 @@ Even with a 200K context window, AI models inevitably suffer from **early-contex
 2. **屡教不改**：你指出了错误，AI 认错态度极好，但下次还敢。
 3. **报警疲劳**：错误一多，系统就会无脑翻旧账，把你烦死。
 
-## 核心特性 (v1.5.0 全新架构)
+## 核心特性 (v1.6.0 工业级架构)
 
 ### 1. 🚦 动态健康预警与阻断机制
 - **计分板（SCOREBOARD）**：以 100 分制量化每个 Agent 的执行力。只要跳步、违规、遗漏，立刻扣分。
@@ -62,6 +67,11 @@ Even with a 200K context window, AI models inevitably suffer from **early-contex
 - **硬性手术**：执行 `REPAIR` 流程修改底层的 `SOUL.md` 或核心模板，将"改正承诺"变成物理约束。
 - **带伤回血（上限 80 分）**：取消无意义的"日常自评加分"。完成真正的底层修复后，AI 分数最高恢复至 80 分——既给予重生的机会，又保留对再次犯错的高敏感度。
 - **周报算总账**：每周末自动生成复盘报告，不仅看最终得分，更展示**本周原始总扣分**，让病情无处遁形。
+
+### 4. 🧹 工业级防膨胀机制（v1.6.0 新增）
+- **同类合并**：自动识别同源错误并原地合并，拒绝冗余日志，保持高信息密度。
+- **5000 Tokens 物理红线**：严格锁定活跃区体积，保障读取零延迟与低 Token 成本。
+- **极致压缩归档**：历史记录自动转为单行审计格式，支持无限期追溯而不拖慢系统。
 
 ## 适用场景 / Use Cases
 - **长线开发任务 / Long-term Development**：多个代码文件的来回修改，防止架构设定被遗忘。
