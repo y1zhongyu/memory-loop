@@ -1,6 +1,6 @@
 ---
 name: memory-loop
-version: 1.2.0
+version: 1.3.0
 description: AI记忆健康检查与强化工具。帮助诊断现有记忆质量、找出错误根因、看清问题模式、搭建或强化记忆体系。适用于任何OpenClaw agent。
 ---
 
@@ -91,11 +91,19 @@ memory-loop/
    ## memory-loop 周复盘检查
    每次heartbeat执行时：
    - 读取SCOREBOARD.md，检查各agent当前分数
-   - 如有agent低于70分，向使用者汇报错误清单+问题模式
+   - **仅当**有agent低于70分时，才向使用者推送：错误清单+问题模式分析
    - 如果当前日期跨入新的一周（周一），触发：
      a. 上周分数归档进SCOREBOARD.md历史区
      b. 各agent分数重置为100
      c. ERRORS.md活跃区中超过30天未触发的条目移入归档区
+   - 无异常时：此项检查静默，不向用户汇报
+
+   ## memory-loop 版本检查
+   每次heartbeat执行时：
+   - 进入 skills/memory-loop/ 目录，执行 `git fetch`
+   - 对比本地与远端的 version 字段（读SKILL.md头部）
+   - **仅当**远端版本更高时，才提示使用者：「memory-loop 有新版本（当前 X.X.X → 最新 X.X.X），运行 git pull 更新」
+   - 已是最新或目录不是git仓库：此项检查静默，不向用户汇报
 
 6. 初始化完成，各agent从本周开始计分
 ```
