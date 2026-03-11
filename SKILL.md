@@ -1,6 +1,6 @@
 ---
 name: memory-loop
-version: 1.6.0
+version: 1.7.0
 description: AI记忆健康检查与强化工具。帮助诊断现有记忆质量、找出错误根因、看清问题模式、搭建或强化记忆体系。适用于任何OpenClaw agent。
 ---
 
@@ -88,15 +88,12 @@ memory-loop/
 
 5. 在HEARTBEAT.md里追加以下内容：
 
-   ## memory-loop 周复盘检查
-   每次heartbeat执行时：
-   - 读取SCOREBOARD.md，检查各agent当前分数
-   - **仅当**有agent低于70分时，才向使用者推送：错误清单+问题模式分析
-   - 如果当前日期跨入新的一周（周一），触发：
-     a. 上周分数归档进SCOREBOARD.md历史区
-     b. 各agent分数重置为100
-     c. ERRORS.md活跃区中超过30天未触发的条目移入归档区
-   - 无异常时：此项检查静默，不向用户汇报
+   ## memory-loop 周一算总账与重置
+   如果当前日期是周一（新的一周），触发：
+   1. 读取 SCOREBOARD.md，生成本周复盘报告（展示原始扣分总计与趋势）。
+   2. 上周分数归档进 SCOREBOARD.md 历史区。
+   3. 各agent分数重置为 100，并清除 `[上次报警: X分]` 标记。
+   4. ERRORS.md 活跃区中超过 30 天未触发的条目移入归档区。
 
    ## memory-loop 版本检查
    每次heartbeat执行时：
@@ -183,6 +180,7 @@ memory-loop/
   2. 记录ERRORS.md
   3. 更新SCOREBOARD.md
   4. 输出扣分说明
+  5. **阈值检查**：计算新分数后，若跌破 70/60 或满足重复项报警条件，必须立即在当前回复中发出预警/修复请求。
   → 顺序不可颠倒，不可跨轮延迟
 
   → 通用行为类错误：记入ERRORS.md
