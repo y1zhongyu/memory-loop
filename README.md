@@ -1,101 +1,69 @@
-# memory-loop
+# memory-loop: AI Memory Health & Dynamic Self-Healing System
+[中文介绍](#中文介绍) | English Introduction
 
-> AI memory health checker and error-prevention system for OpenClaw agents.
+> **The strictest memory and execution manager in the OpenClaw ecosystem.**
+> It doesn't just log your requirements; it diagnoses *why* the AI "knows but fails to execute," and enforces a physical self-healing mechanism.
 
-## What is it?
+## Why memory-loop?
+Even with a 200K context window, AI models inevitably suffer from **early-context amnesia, implicit rule negligence, and repeating the same mistakes**.
+`memory-loop` tackles three fatal pain points in long-term, complex AI tasks:
+1. **Context Drift**: Mid-conversation, the AI forgets the template or rules you set initially.
+2. **Incorrigibility**: You point out a mistake, the AI apologizes sincerely, but makes the exact same error later.
+3. **Alert Fatigue**: When errors pile up, legacy systems repeatedly bombard you with the same old error logs.
 
-Every new session, your AI agent wakes up fresh — with no memory of past mistakes. And even within a session, long conversations drift — the agent forgets what was agreed earlier and contradicts itself.
+## Core Features (v1.5.0 New Architecture)
 
-**memory-loop** fixes both: a closed-loop error system that carries lessons across sessions, and a decision anchor that keeps long conversations coherent.
+### 1. 🚦 Dynamic Health Alerts & Soft Interruption
+- **SCOREBOARD**: Quantifies each Agent's execution capability on a 100-point scale. Any skipped step, rule violation, or omission results in immediate point deduction.
+- **Anti-Fatigue Alerts**: Triggers a warning when the score drops below 70. **Core Optimization: Alerts fire ONLY on score changes, pushing ONLY "newly added errors" since the last alert.** It never digs up old accounts and remains absolutely silent when the score is stable.
+- **Soft Interruption (Anti-OOC)**: At <60 points, the AI requests a work pause to self-heal. It strictly uses its defined persona (via `SOUL.md`) to avoid breaking character (Out Of Character), and **leaves the ultimate decision ("fix now" or "keep working") entirely to the user.**
 
-## What it solves
+### 2. 🗂️ Cross-Session Task Cache (DECISIONS)
+- **Refusing Context Wipes**: `DECISIONS.md` is no longer a burn-after-reading temp file. It acts as a state anchor throughout the project's lifecycle.
+- **Active/Dormant Dual Zones**: Active rules and templates are kept in the `[Active Zone]`; once a phase is complete, they retire to the `[Dormant Zone]`.
+- **Forced Physical Reads**: Before generating multi-line structured content or executing high-risk operations, the AI **must** read the Active Zone. This trades a tiny token footprint for 100% format and process fidelity.
 
-- **Bridges the session gap** — enforces error recall before each task, so past mistakes actually carry over across sessions
-- **Prevents in-session drift** — logs confirmed decisions as anchors, so long conversations don't contradict earlier agreements
-- **Records errors** with actionable check steps, not vague descriptions
-- **Scores agents weekly** (100pt baseline, deductions per error type)
-- **Detects repeat offenses** and doubles the penalty
-- **Runs weekly retrospectives** automatically via heartbeat
-- **Alerts you** when an agent's score drops below 70
-- **Diagnoses root causes** — whether it's a bad rule file, a vague error log, or a missing pre-task check
-
-## File structure
-
-```
-memory-loop/
-├── SKILL.md        # Setup guide & initialization flow
-├── RULES.md        # Scoring rules and error boundaries
-├── ERRORS.md       # Active + archived error log
-├── SCOREBOARD.md   # Weekly score tracker
-├── DIAGNOSIS.md    # Diagnosis report template
-├── REPAIR.md       # 3-layer repair protocol
-└── DECISIONS.md    # In-session decision anchor (temporary)
-```
-
-## Installation
-
-```bash
-cd ~/.openclaw/workspace/skills
-git clone git@github.com:y1zhongyu/memory-loop.git
-```
-
-Then tell your agent: *"Set up memory-loop for me."*
-
-## Updating
-
-When a new version is available, your agent will notify you during heartbeat. Run:
-
-```bash
-cd ~/.openclaw/workspace/skills/memory-loop
-git pull
-```
-
-## Scoring system
-
-| Score | Grade | Meaning |
-|-------|-------|---------|
-| 90–100 | A · Reliable | Rare mistakes, memory working |
-| 70–89 | B · Acceptable | Errors present, watch for repeats |
-| 50–69 | C · Needs work | Repeated errors, memory suspect |
-| < 50 | F · Reset triggered | Full diagnosis required |
+### 3. 🛠️ Deep Diagnosis & Recovery System (DIAGNOSIS & REPAIR)
+- **Finding the Root Cause**: Uses `DIAGNOSIS` to analyze why an error repeats (Ambiguous rules? Ineffective prompts? Or just rushing the execution?).
+- **Hard Surgery**: Executes the `REPAIR` workflow to modify core files like `SOUL.md`, turning "promises to improve" into physical constraints.
+- **Wounded Recovery (Cap at 80 pts)**: Eliminates meaningless "daily self-assessed bonus points." After a true root-cause repair, the AI's score recovers to a **maximum of 80 points**—offering a chance at redemption while keeping the system highly sensitive to subsequent errors.
+- **Weekly True Reckoning**: Weekly reports display not just the final score, but the **total raw points deducted that week**, exposing the true severity of the AI's "illness."
 
 ---
 
-# memory-loop（中文说明）
+## 中文介绍
 
-> 专为 OpenClaw agent 设计的记忆健康检查与错误防复发系统。
+# memory-loop：AI 记忆健康评估与动态自愈系统
 
-## 它是什么
+> **OpenClaw 生态最严苛的 AI 记忆与执行力管家。**
+> 不仅仅是记下你的需求，更能诊断 AI 为什么总是"记住了但做不到"，并建立强制自愈机制。
 
-每次新 session，AI agent 都会失忆——不记得上次犯了什么错。而即使在同一个 session 里，长对话也会漂移——agent 忘记前面已经确认的决策，开始前后矛盾。
+## 为什么你需要 memory-loop？
+哪怕你拥有 200K 的上下文，AI 依然会**遗忘早期细节、忽视隐性规则、重蹈覆辙**。
+`memory-loop` 专注解决大模型在长线复杂任务中的三个致命痛点：
+1. **上下文漂移**：聊着聊着，AI 就忘了你最初定的模板和规则。
+2. **屡教不改**：你指出了错误，AI 认错态度极好，但下次还敢。
+3. **报警疲劳**：错误一多，系统就会无脑翻旧账，把你烦死。
 
-**memory-loop** 同时解决这两个问题：跨 session 的错误闭环，让教训真正延续；同 session 的决策锚点，让长对话保持连贯。
+## 核心特性 (v1.5.0 全新架构)
 
-## 解决什么问题
+### 1. 🚦 动态健康预警与阻断机制
+- **计分板（SCOREBOARD）**：以 100 分制量化每个 Agent 的执行力。只要跳步、违规、遗漏，立刻扣分。
+- **不打扰预警（防疲劳）**：分数跌破 70 分时触发预警。**核心优化：分数变动才推送，每次只推"新增错误"，绝不翻旧账**，分数稳定时保持绝对静默。
+- **柔性阻断（防 OOC）**：跌破 60 分时，AI 会用符合自身人设的语气（严格遵循 SOUL.md，拒绝 OOC）请求暂停工作进行自愈，但**把最终决定权交给用户**（"现在修" 或 "先干活"）。
 
-- **跨 session 记忆衔接**——任务前强制读取错误记录，让过去的教训真正延续到下一次
-- **同 session 上下文连贯**——关键决策实时记录为锚点，防止长对话漂移导致前后矛盾
-- 用可操作的检查方式记录错误，不是模糊描述
-- 每周从100分开始计分，按错误类型扣分
-- 检测重复犯错，罚分翻倍
-- 通过 heartbeat 自动执行周复盘
-- 分数低于70时主动汇报预警
-- 诊断根因：规范文件有歧义？错误描述太模糊？任务前没读记忆？
+### 2. 🗂️ 跨 Session 任务缓存 (DECISIONS)
+- **拒绝上下文清空**：`DECISIONS.md` 不再是阅后即焚的临时文件，而是伴随整个项目生命周期的状态锚点。
+- **活跃/休眠双区管理**：当前讨论的模板与规则存放在**活跃区**；阶段性完成后退居**休眠区**。
+- **物理强制读取**：AI 在生成任何多行结构化内容或执行高危操作前，**必须强制读取活跃区**。这用极低的 Token 消耗，换取了 100% 的格式与流程保真。
 
-## 安装
+### 3. 🛠️ 深度诊断与回血系统 (DIAGNOSIS & REPAIR)
+- **找病灶，不看表象**：通过 `DIAGNOSIS` 分析重复犯错的根因（是规范歧义？是提示词失效？还是管不住手？）。
+- **硬性手术**：执行 `REPAIR` 流程修改底层的 `SOUL.md` 或核心模板，将"改正承诺"变成物理约束。
+- **带伤回血（上限 80 分）**：取消无意义的"日常自评加分"。完成真正的底层修复后，AI 分数最高恢复至 80 分——既给予重生的机会，又保留对再次犯错的高敏感度。
+- **周报算总账**：每周末自动生成复盘报告，不仅看最终得分，更展示**本周原始总扣分**，让病情无处遁形。
 
-```bash
-cd ~/.openclaw/workspace/skills
-git clone git@github.com:y1zhongyu/memory-loop.git
-```
-
-然后对 agent 说：「帮我初始化 memory-loop。」
-
-## 更新
-
-有新版本时，agent 会在 heartbeat 时主动提醒你。更新方法：
-
-```bash
-cd ~/.openclaw/workspace/skills/memory-loop
-git pull
-```
+## 适用场景 / Use Cases
+- **长线开发任务 / Long-term Development**：多个代码文件的来回修改，防止架构设定被遗忘。
+- **标准化内容生成 / Standardized Content Gen**：如研报撰写、排版输出，保证每一份结果都死死咬住你的定制模板。
+- **Agent 调教期 / Agent Tuning Phase**：帮你快速锁定 AI 的认知盲区，并用物理手段打补丁。
