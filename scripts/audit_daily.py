@@ -27,6 +27,7 @@ def get_today_sessions():
 def audit_sessions(session_files):
     errors = []
     escaped_errors = []
+    error_counts = {}
     
     # 匹配 [Err: #XXX (简述)]
     err_pattern = re.compile(r"\[Err:\s*#(\d+)\s*\((.*?)\)\]")
@@ -42,17 +43,19 @@ def audit_sessions(session_files):
                     if role == "assistant":
                         matches = err_pattern.findall(text)
                         for m in matches:
-                            errors.append({"id": m[0], "reason": m[1]})
+                            err_id, reason = m
+                            errors.append({"id": err_id, "reason": reason})
+                            error_counts[err_id] = error_counts.get(err_id, 0) + 1
                     if role == "user":
                         if neg_pattern.search(text):
                             escaped_errors.append({"user_msg": text[:50]})
                 except:
                     continue
-    return errors, escaped_errors
+    return errors, escaped_errors, error_counts
 
 def generate_report():
     sessions = get_today_sessions()
-    errors, escaped = audit_sessions(sessions)
+    errors, escaped, error_counts = audit_sessions(sessions)
     
     report = f"# 📅 memory-loop 日报 | {datetime.now().strftime('%Y-%m-%d')}\n\n"
     
@@ -60,8 +63,22 @@ def generate_report():
     report += "### 1. 记忆审计明细\n"
     if not errors:
         report += "- 今日无记录错误。✅\n"
+    
+    # 热度检测：如果单日出现多次，提示固化建议
+    consolidation_suggestions = []
     for e in errors:
-        report += f"- **[Err: #{e['id']}]** - {e['reason']}\n"
+        count_str = f" (今日出现 {error_counts[e['id']]} 次)" if error_counts[e['id']] > 1 else ""
+        report += f"- **[Err: #{e['id']}]** - {e['reason']}{count_str}\n"
+        if error_counts[e['id']] >= 2: # 设定单日阈值为 2 次
+            suggestion = f"**[Err: #{e['id']}]** ({e['reason']}) 触发频次过高，建议考虑固化至 MEMORY.md。"
+            if suggestion not in consolidation_suggestions:
+                consolidation_suggestions.append(suggestion)
+    
+    if consolidation_suggestions:
+        report += "\n#### 🧠 记忆新陈代谢建议 (Consolidation)\n"
+        for s in consolidation_suggestions:
+            report += f"- {s}\n"
+
     if escaped:
         report += "\n- **逃单核查 ⚠️**: 发现疑似漏报项，请 Agent 及时自检。\n"
 
