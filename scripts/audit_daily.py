@@ -95,4 +95,9 @@ def generate_report():
     return report
 
 if __name__ == "__main__":
-    print(generate_report())
+    report = generate_report()
+print(report)
+log_path = "/home/yuyizhong/.openclaw/workspace/memory/audit_log.txt"
+with open(log_path, "w") as f:
+    f.write(report)
+

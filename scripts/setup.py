@@ -34,12 +34,12 @@ CRON_JOBS = [
     {
         "name": "daily-audit",
         "expr": "0 20 * * *",
-        "payload": "Read HEARTBEAT.md if it exists (workspace context). Follow it strictly. Do not infer or repeat old tasks from prior chats. If nothing needs attention, reply HEARTBEAT_OK."
+        "payload": "Read memory/audit_log.txt (workspace context). If there is a new audit report, format it nicely, send it to the user immediately as a proactive message, and then clear the file contents. If the file is empty or missing, reply HEARTBEAT_OK."
     },
     {
         "name": "weekly-audit",
         "expr": "30 10 * * 1",
-        "payload": "Read HEARTBEAT.md if it exists (workspace context). Follow it strictly. Do not infer or repeat old tasks from prior chats. If nothing needs attention, reply HEARTBEAT_OK."
+        "payload": "Read memory/audit_log.txt (workspace context). If there is a new audit report, format it nicely, send it to the user immediately as a proactive message, and then clear the file contents. If the file is empty or missing, reply HEARTBEAT_OK."
     }
 ]
 
