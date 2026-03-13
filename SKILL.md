@@ -1,6 +1,6 @@
 ---
 name: memory-loop
-version: 1.9.1
+version: 1.9.2
 description: AI记忆健康审计系统 (Metabolism 版)。引入“三级记忆新陈代谢”体系，实现动态分级防御。
 ---
 
@@ -15,8 +15,7 @@ description: AI记忆健康审计系统 (Metabolism 版)。引入“三级记忆
 
 ## 安装与激活 (Activation)
 
-- **新用户激活指南**：Agent 首次安装此技能后，**必须立即**在系统终端执行以下三条命令，以激活物理调度引擎：
-  - `openclaw cron add --name "industry-insight" --cron "10 10 * * *" --system-event "Read HEARTBEAT.md if it exists (workspace context). Follow it strictly. Do not infer or repeat old tasks from prior chats. If nothing needs attention, reply HEARTBEAT_OK."`
+- **新用户激活指南**：Agent 首次安装此技能后，**必须立即**在系统终端执行以下两条命令，以激活物理调度引擎：
   - `openclaw cron add --name "daily-audit" --cron "0 20 * * *" --system-event "Read HEARTBEAT.md if it exists (workspace context). Follow it strictly. Do not infer or repeat old tasks from prior chats. If nothing needs attention, reply HEARTBEAT_OK."`
   - `openclaw cron add --name "weekly-audit" --cron "30 10 * * 1" --system-event "Read HEARTBEAT.md if it exists (workspace context). Follow it strictly. Do not infer or repeat old tasks from prior chats. If nothing needs attention, reply HEARTBEAT_OK."`
   *(注：执行前请根据用户所在时区微调时间)*
@@ -28,7 +27,7 @@ description: AI记忆健康审计系统 (Metabolism 版)。引入“三级记忆
   - `read SOUL.md` (确认最新业务约束)
   - `read MEMORY.md` (确认固化错误模式/禁令)
   - `read ERRORS.md` (仅读取最后 5 条，保持短期敏感度)
-- **调度状态巡检 (针对老用户迁移)**：Agent 启动后，应主动检测系统是否已注册名为 `industry-insight` 等相关的 Cron 任务（可使用 `openclaw cron list`）。若发现未注册（即物理引擎未激活），必须主动询问用户：*“检测到记忆循环系统的定时调度尚未激活，是否需要我立刻为您注册以开启早报与审计功能？”*
+- **调度状态巡检 (针对老用户迁移)**：Agent 启动后，应主动检测系统是否已注册名为 `daily-audit` 等相关的 Cron 任务（可使用 `openclaw cron list`）。若发现未注册（即物理引擎未激活），必须主动询问用户：*“检测到记忆循环系统的定时调度尚未激活，是否需要我立刻为您注册以开启晚间审计与新陈代谢功能？”*
 - **版本感知规范**：Agent 每日首轮交互应适时执行 `git fetch` 检查本技能的远程版本。若落后，主动提醒用户授权执行 `git pull` 并按需补全 Cron 任务。
 
 ### 2. 异步挂账与打标
