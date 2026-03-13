@@ -106,7 +106,7 @@ def check_and_register_cron():
     print("\n--- 2. 定时调度引擎 (Cron) 检查 ---")
     try:
         # 获取现有的 cron 列表
-        output = subprocess.check_output(["openclaw", "cron", "list"], stderr=subprocess.STDOUT).decode('utf-8')
+        output = subprocess.check_output(["/home/yuyizhong/.nvm/versions/node/v25.7.0/bin/openclaw", "cron", "list"], stderr=subprocess.STDOUT).decode('utf-8')
     except Exception as e:
         print(f"[-] 无法读取 OpenClaw Cron 列表，请手动执行注册命令。错误: {e}")
         return
@@ -117,7 +117,7 @@ def check_and_register_cron():
         else:
             print(f"[+] 正在注册缺失的 Cron 任务: {job['name']} ...")
             cmd = [
-                "openclaw", "cron", "add",
+                "/home/yuyizhong/.nvm/versions/node/v25.7.0/bin/openclaw", "cron", "add",
                 "--name", job["name"],
                 "--cron", job["expr"],
                 "--session", "main",
