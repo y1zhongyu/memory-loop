@@ -1,6 +1,6 @@
 ---
 name: memory-loop
-version: 1.9.3
+version: 1.9.4
 description: AI记忆健康审计系统 (Metabolism 版)。引入“三级记忆新陈代谢”体系，实现动态分级防御。
 ---
 
@@ -20,6 +20,7 @@ description: AI记忆健康审计系统 (Metabolism 版)。引入“三级记忆
   python3 scripts/setup.py
   ```
   *(该脚本会自动检测并创建缺失的 ERRORS.md、DECISIONS.md 等基础文件，并自动在系统底层注册名为 `daily-audit` 和 `weekly-audit` 的必选 Cron 定时任务。)*
+- **逻辑融合审计 (Mandatory)**：激活脚本执行完毕后，Agent **必须立即**对 `SOUL.md` 进行深度逻辑审核，检查新注入的审计规范与原生人设/规则是否存在冲突，并在不破坏核心审计逻辑的前提下完成平滑融合。
 
 ## 日常运行协议 (分级加载模式)
 
