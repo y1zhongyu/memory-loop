@@ -1,6 +1,6 @@
 ---
 name: memory-loop
-version: 1.9.0
+version: 1.9.1
 description: AI记忆健康审计系统 (Metabolism 版)。引入“三级记忆新陈代谢”体系，实现动态分级防御。
 ---
 
@@ -13,21 +13,13 @@ description: AI记忆健康审计系统 (Metabolism 版)。引入“三级记忆
 3. **三级：灵魂刻印 (SOUL.md)**：经过验证的长期核心业务规范。
 4. **动态流动**：基于热度检测（脚本识别 ≥2次/日）自动建议晋升，基于肌肉记忆（30天未犯）自动建议降级。
 
-## 文件结构
+## 安装与激活 (Activation)
 
-```
-memory-loop/
-├── SKILL.md        # 核心架构协议与三级防御规范
-├── RULES.md        # 评分标准与标记规则 (含晋升/降级判定标准)
-├── ERRORS.md       # 错误原始清单（一级记忆）
-├── SCOREBOARD.md   # 分数看板
-├── DIAGNOSIS.md    # 诊断模板
-├── REPAIR.md       # 记忆修复流程
-├── DECISIONS.md    # 认知沙盘（转正缓冲区）
-└── scripts/
-    ├── audit_daily.py  # 晚间审计脚本 (含热度检测逻辑)
-    └── token_auditor.py # 算力消耗审计脚本
-```
+- **新用户激活指南**：Agent 首次安装此技能后，**必须立即**在系统终端执行以下三条命令，以激活物理调度引擎：
+  - `openclaw cron add --name "industry-insight" --cron "10 10 * * *" --system-event "Read HEARTBEAT.md if it exists (workspace context). Follow it strictly. Do not infer or repeat old tasks from prior chats. If nothing needs attention, reply HEARTBEAT_OK."`
+  - `openclaw cron add --name "daily-audit" --cron "0 20 * * *" --system-event "Read HEARTBEAT.md if it exists (workspace context). Follow it strictly. Do not infer or repeat old tasks from prior chats. If nothing needs attention, reply HEARTBEAT_OK."`
+  - `openclaw cron add --name "weekly-audit" --cron "30 10 * * 1" --system-event "Read HEARTBEAT.md if it exists (workspace context). Follow it strictly. Do not infer or repeat old tasks from prior chats. If nothing needs attention, reply HEARTBEAT_OK."`
+  *(注：执行前请根据用户所在时区微调时间)*
 
 ## 日常运行协议 (分级加载模式)
 
@@ -36,7 +28,8 @@ memory-loop/
   - `read SOUL.md` (确认最新业务约束)
   - `read MEMORY.md` (确认固化错误模式/禁令)
   - `read ERRORS.md` (仅读取最后 5 条，保持短期敏感度)
-- **目的**：通过分级读取，在维持“活跃记忆”清晰度的同时，确保血泪教训不被遗忘。
+- **调度状态巡检 (针对老用户迁移)**：Agent 启动后，应主动检测系统是否已注册名为 `industry-insight` 等相关的 Cron 任务（可使用 `openclaw cron list`）。若发现未注册（即物理引擎未激活），必须主动询问用户：*“检测到记忆循环系统的定时调度尚未激活，是否需要我立刻为您注册以开启早报与审计功能？”*
+- **版本感知规范**：Agent 每日首轮交互应适时执行 `git fetch` 检查本技能的远程版本。若落后，主动提醒用户授权执行 `git pull` 并按需补全 Cron 任务。
 
 ### 2. 异步挂账与打标
 - **规则**：执行过程中实时打标 `[Err: #ID (简述)]`。
