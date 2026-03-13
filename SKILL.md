@@ -1,6 +1,6 @@
 ---
 name: memory-loop
-version: 1.9.2
+version: 1.9.3
 description: AI记忆健康审计系统 (Metabolism 版)。引入“三级记忆新陈代谢”体系，实现动态分级防御。
 ---
 
@@ -15,10 +15,11 @@ description: AI记忆健康审计系统 (Metabolism 版)。引入“三级记忆
 
 ## 安装与激活 (Activation)
 
-- **新用户激活指南**：Agent 首次安装此技能后，**必须立即**在系统终端执行以下两条命令，以激活物理调度引擎：
-  - `openclaw cron add --name "daily-audit" --cron "0 20 * * *" --system-event "Read HEARTBEAT.md if it exists (workspace context). Follow it strictly. Do not infer or repeat old tasks from prior chats. If nothing needs attention, reply HEARTBEAT_OK."`
-  - `openclaw cron add --name "weekly-audit" --cron "30 10 * * 1" --system-event "Read HEARTBEAT.md if it exists (workspace context). Follow it strictly. Do not infer or repeat old tasks from prior chats. If nothing needs attention, reply HEARTBEAT_OK."`
-  *(注：执行前请根据用户所在时区微调时间)*
+- **一键激活指南**：Agent 安装此技能后，**必须立即**在终端执行自检与激活脚本：
+  ```bash
+  python3 scripts/setup.py
+  ```
+  *(该脚本会自动检测并创建缺失的 ERRORS.md、DECISIONS.md 等基础文件，并自动在系统底层注册名为 `daily-audit` 和 `weekly-audit` 的必选 Cron 定时任务。)*
 
 ## 日常运行协议 (分级加载模式)
 
