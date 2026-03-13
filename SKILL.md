@@ -1,6 +1,6 @@
 ---
 name: memory-loop
-version: 1.9.6
+version: 1.9.7
 description: AI记忆健康审计系统 (Metabolism 版)。引入“三级记忆新陈代谢”体系，实现动态分级防御。
 ---
 

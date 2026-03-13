@@ -120,6 +120,7 @@ def check_and_register_cron():
                 "openclaw", "cron", "add",
                 "--name", job["name"],
                 "--cron", job["expr"],
+                "--session", "main",
                 "--system-event", job["payload"]
             ]
             try:
