@@ -1,4 +1,5 @@
 import os
+os.makedirs("/home/yuyizhong/.openclaw/workspace/memory", exist_ok=True)
 import json
 import re
 import subprocess

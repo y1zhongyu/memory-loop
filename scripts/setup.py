@@ -34,12 +34,12 @@ CRON_JOBS = [
     {
         "name": "daily-audit",
         "expr": "0 20 * * *",
-        "payload": "Read memory/audit_log.txt (workspace context). If there is a new audit report, format it nicely, send it to the user immediately as a proactive message, and then clear the file contents. If the file is empty or missing, reply HEARTBEAT_OK."
+        "payload": "Execute the command 'python3 workspace/skills/memory-loop/scripts/audit_daily.py'. After it finishes, read workspace/memory/audit_log.txt. If there is a new audit report, format it nicely, send it to the user immediately as a proactive message, and then clear the file contents."
     },
     {
         "name": "weekly-audit",
         "expr": "30 10 * * 1",
-        "payload": "Read memory/audit_log.txt (workspace context). If there is a new audit report, format it nicely, send it to the user immediately as a proactive message, and then clear the file contents. If the file is empty or missing, reply HEARTBEAT_OK."
+        "payload": "Execute the command 'python3 workspace/skills/memory-loop/scripts/audit_weekly.py'. After it finishes, read workspace/memory/audit_log.txt. If there is a new audit report, format it nicely, send it to the user immediately as a proactive message, and then clear the file contents."
     }
 ]
 
